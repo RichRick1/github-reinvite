@@ -6,7 +6,8 @@ export const ORGANIZATIONS = {
     assignments: {
 
       "🧑GitHub Fundamentals": "github-fundamentals",
-      "Easy Moments": "easy-moments"
+      "Easy Moments": "easy-moments",
+      "2 Particles in a Box": "2pinbox"
     }
   }
 } as const;
