@@ -7,7 +7,7 @@ interface Input {
   owner: string;
   repo: string;
   username: string;
-  permission: "pull" | "triage" | "push" | "maintain";
+  permission: "pull" | "triage" | "push" | "maintain" | "admin";
 }
 
 interface Invitation {
@@ -41,7 +41,7 @@ export default function Page() {
     return firstAssignment || "🧑GitHub Fundamentals";
   });
   const [username, setUsername] = useState("");
-  const [permission, setPermission] = useState<"pull"|"triage"|"push"|"maintain">("push");
+  const [permission, setPermission] = useState<"pull"|"triage"|"push"|"maintain"|"admin">("push");
   const [dryRun, setDryRun] = useState(false);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<Result | null>(null);
