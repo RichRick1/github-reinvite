@@ -7,7 +7,7 @@ interface Input {
   owner: string;
   repo: string;
   username: string;
-  permission: "pull" | "triage" | "push" | "maintain" | "admin";
+  permission: "pull" | "triage" | "push" | "maintain";
 }
 
 interface Invitation {
@@ -34,14 +34,14 @@ type Result = {
 };
 
 export default function Page() {
-  const [organization, setOrganization] = useState<OrganizationKey>("IT3049C-Fall25");
+  const [organization, setOrganization] = useState<OrganizationKey>("McMasterQM");
   const [assignment, setAssignment] = useState<string>(() => {
     // Ensure we have a valid assignment on first load
-    const firstAssignment = Object.keys(ORGANIZATIONS["IT3049C-Fall25"].assignments)[0];
-    return firstAssignment || "🧑‍💻 Campus Portal (JS Exercises)";
+    const firstAssignment = Object.keys(ORGANIZATIONS["McMasterQM"].assignments)[0];
+    return firstAssignment || "🧑GitHub Fundamentals";
   });
   const [username, setUsername] = useState("");
-  const [permission, setPermission] = useState<"pull"|"triage"|"push"|"maintain"|"admin">("admin");
+  const [permission, setPermission] = useState<"pull"|"triage"|"push"|"maintain">("push");
   const [dryRun, setDryRun] = useState(false);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<Result | null>(null);
