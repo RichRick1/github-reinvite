@@ -485,19 +485,6 @@ export default function Page() {
               gap: "0.3em"
             }}
           >
-            ☕ Buy Me a Coffee
-          </a>
-          <a 
-            href="https://github.com/ygilany/github-reinvite" 
-            style={{ 
-              color: "rgba(255, 255, 255, 0.9)", 
-              textDecoration: "none",
-              fontSize: "0.8rem",
-              display: "flex",
-              alignItems: "center",
-              gap: "0.3em"
-            }}
-          >
             📁 Repository
           </a>
         </div>

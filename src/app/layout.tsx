@@ -16,7 +16,9 @@ export const metadata: Metadata = {
   title: "GitHub Re-invite Tool | Manage Repository Invitations",
   description: "A modern web application that helps manage GitHub repository invitations by removing stale invitations and sending fresh ones. Perfect for educational institutions managing student access to course repositories.",
   keywords: ["GitHub", "repository", "invitations", "collaboration", "education", "students", "access management"],
-  authors: [{ name: "Yahya Gilany", url: "https://yahyagilany.io" }],
+  authors: [{ name: "Yahya Gilany", url: "https://yahyagilany.io" },
+            { name: "Valerii Chuiko", url: "https://valeriichuiko.org" }
+  ],
   creator: "Yahya Gilany",
   publisher: "Yahya Gilany",
   robots: {
