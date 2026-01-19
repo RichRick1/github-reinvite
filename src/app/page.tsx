@@ -443,12 +443,13 @@ export default function Page() {
         textAlign: "center",
         marginTop: "1rem",
         padding: "0.5rem",
-        color: "rgba(255, 255, 255, 0.8)",
+        color: "#111827",
         fontSize: "0.85rem",
         lineHeight: "1.5"
       }}>
         <p style={{ margin: "0 0 0.5rem 0", display: "flex", alignItems: "center", justifyContent: "center", flexWrap: "wrap", gap: "0.2em" }}>
-          <a href="https://github-reinvite.vercel.app/" style={{ color: "rgba(255, 255, 255, 0.9)", textDecoration: "none" }}>GitHub Re-invite</a> © 2025 by <a href="https://yahyagilany.io" style={{ color: "rgba(255, 255, 255, 0.9)", textDecoration: "none" }}>Yahya Gilany</a> is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" style={{ color: "rgba(255, 255, 255, 0.9)", textDecoration: "none" }}>CC BY-NC-SA 4.0</a>
+          <a href="https://github-reinvite.vercel.app/" style={{ color: "#111827", textDecoration: "none" }}>GitHub Re-invite</a> © 2025 by <a href="https://yahyagilany.io" style={{ color: "#111827", textDecoration: "none" }}>Yahya Gilany</a> is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" style={{ color: "#111827", textDecoration: "none" }}>CC BY-NC-SA 4.0</a>
+          <span style={{ color: "#374151" }}>(adapted by Valerii Chuiko)</span>
           <span style={{ display: "inline-flex", alignItems: "center", gap: "0.2em" }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="CC" style={{ maxWidth: "1em", maxHeight: "1em", display: "inline-block" }} />
@@ -464,7 +465,7 @@ export default function Page() {
           <a 
             href="https://yahyagilany.io" 
             style={{ 
-              color: "rgba(255, 255, 255, 0.9)", 
+              color: "#111827", 
               textDecoration: "none",
               fontSize: "0.8rem",
               display: "flex",
@@ -477,7 +478,7 @@ export default function Page() {
           <a 
             href="https://www.buymeacoffee.com/ygilany" 
             style={{ 
-              color: "rgba(255, 255, 255, 0.9)", 
+              color: "#111827", 
               textDecoration: "none",
               fontSize: "0.8rem",
               display: "flex",
