@@ -33,20 +33,10 @@ type Result = {
   dryRun?: boolean;
 };
 
-// Primary Theme Colors
-const COLORS = {
-  primary: "#4f46e5", // Indigo 600
-  primaryHover: "#4338ca", // Indigo 700
-  accent: "#0ea5e9", // Sky 500
-  bgGradient: "linear-gradient(135deg, #f0f9ff 0%, #e0e7ff 100%)",
-  textMain: "#1e293b", // Slate 800
-  textMuted: "#64748b", // Slate 500
-  border: "#e2e8f0",
-};
-
 export default function Page() {
   const [organization, setOrganization] = useState<OrganizationKey>("McMasterQM");
   const [assignment, setAssignment] = useState<string>(() => {
+    // Ensure we have a valid assignment on first load
     const firstAssignment = Object.keys(ORGANIZATIONS["McMasterQM"].assignments)[0];
     return firstAssignment || "🧑GitHub Fundamentals";
   });
@@ -56,10 +46,12 @@ export default function Page() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<Result | null>(null);
 
+  // Calculate repo name based on assignment and username
   const assignmentPrefix = ORGANIZATIONS[organization].assignments[assignment as keyof typeof ORGANIZATIONS[typeof organization]["assignments"]];
   const repoName = username && assignmentPrefix ? `${assignmentPrefix}-${username}` : "";
   const owner = ORGANIZATIONS[organization].owner;
 
+  // Handle organization change - reset assignment to first available
   const handleOrganizationChange = (newOrg: OrganizationKey) => {
     setOrganization(newOrg);
     const firstAssignment = Object.keys(ORGANIZATIONS[newOrg].assignments)[0];
@@ -95,57 +87,67 @@ export default function Page() {
   return (
     <div style={{ 
       minHeight: "100vh", 
-      background: COLORS.bgGradient,
-      padding: "2rem 1rem"
+      background: "linear-gradient(135deg, #dbeafe 0%, #e0f2fe 50%, #ecfdf3 100%)",
+      padding: "0.75rem"
     }}>
       <main style={{ 
         maxWidth: 680, 
         margin: "0 auto", 
         background: "white",
-        borderRadius: "20px",
-        boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05)",
-        padding: "2.5rem",
-        fontFamily: "Inter, -apple-system, system-ui, sans-serif"
+        borderRadius: "16px",
+        boxShadow: "0 20px 40px rgba(0,0,0,0.1)",
+        padding: "1rem",
+        fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
       }}>
-        <div style={{ textAlign: "center", marginBottom: "2rem" }}>
+        <div style={{ textAlign: "center", marginBottom: "1rem" }}>
           <h1 style={{ 
-            fontSize: "2.25rem", 
-            fontWeight: "800", 
-            color: COLORS.textMain, 
+            fontSize: "2.5rem", 
+            fontWeight: "700", 
+            color: "#1a1a1a", 
             margin: "0 0 0.5rem 0",
-            letterSpacing: "-0.025em"
+              background: "linear-gradient(135deg, #2563eb 0%, #10b981 100%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text"
           }}>
-            GitHub <span style={{ color: COLORS.primary }}>Re-invite</span>
+            GitHub Re-invite Tool
           </h1>
           <p style={{ 
-            fontSize: "1.05rem", 
-            color: COLORS.textMuted, 
+            fontSize: "1.1rem", 
+            color: "#6b7280", 
             margin: "0",
-            lineHeight: "1.5"
+            lineHeight: "1.6"
           }}>
-            Clean up stale invitations and sync student repositories
+            Remove any stale repo invitation and send a fresh one
           </p>
         </div>
 
-        <form onSubmit={onSubmit} style={{ display: "grid", gap: "1.25rem" }}>
+        <form onSubmit={onSubmit} style={{ display: "grid", gap: "0.75rem" }}>
           <div style={{ display: "grid", gap: "0.5rem" }}>
-            <label style={{ fontSize: "0.875rem", fontWeight: "600", color: COLORS.textMain }}>
+            <label style={{ 
+              fontSize: "0.875rem", 
+              fontWeight: "600", 
+              color: "#374151",
+              textTransform: "uppercase",
+              letterSpacing: "0.05em"
+            }}>
               Organization
             </label>
             <select 
               value={organization} 
               onChange={e => handleOrganizationChange(e.target.value as OrganizationKey)}
               style={{
-                padding: "0.75rem 1rem",
-                border: `1px solid ${COLORS.border}`,
-                borderRadius: "10px",
+                padding: "0.875rem 1rem",
+                border: "2px solid #e5e7eb",
+                borderRadius: "8px",
                 fontSize: "1rem",
+                transition: "all 0.2s ease",
                 outline: "none",
-                background: "#fcfcfd",
+                background: "white",
                 cursor: "pointer"
               }}
-              onFocus={(e) => e.target.style.borderColor = COLORS.primary}
-              onBlur={(e) => e.target.style.borderColor = COLORS.border}
+              onFocus={(e) => e.target.style.borderColor = "#2563eb"}
+              onBlur={(e) => e.target.style.borderColor = "#e5e7eb"}
             >
               {Object.entries(ORGANIZATIONS).map(([key, org]) => (
                 <option key={key} value={key}>🏫 {org.name}</option>
@@ -154,22 +156,30 @@ export default function Page() {
           </div>
 
           <div style={{ display: "grid", gap: "0.5rem" }}>
-            <label style={{ fontSize: "0.875rem", fontWeight: "600", color: COLORS.textMain }}>
+            <label style={{ 
+              fontSize: "0.875rem", 
+              fontWeight: "600", 
+              color: "#374151",
+              textTransform: "uppercase",
+              letterSpacing: "0.05em"
+            }}>
               Assignment
             </label>
             <select 
               value={assignment} 
               onChange={e => setAssignment(e.target.value)}
               style={{
-                padding: "0.75rem 1rem",
-                border: `1px solid ${COLORS.border}`,
-                borderRadius: "10px",
+                padding: "0.875rem 1rem",
+                border: "2px solid #e5e7eb",
+                borderRadius: "8px",
                 fontSize: "1rem",
+                transition: "all 0.2s ease",
                 outline: "none",
-                background: "#fcfcfd"
+                background: "white",
+                cursor: "pointer"
               }}
-              onFocus={(e) => e.target.style.borderColor = COLORS.primary}
-              onBlur={(e) => e.target.style.borderColor = COLORS.border}
+              onFocus={(e) => e.target.style.borderColor = "#2563eb"}
+              onBlur={(e) => e.target.style.borderColor = "#e5e7eb"}
             >
               {Object.entries(ORGANIZATIONS[organization].assignments).map(([key]) => (
                 <option key={key} value={key}>📝 {key}</option>
@@ -177,9 +187,16 @@ export default function Page() {
             </select>
           </div>
 
+
           <div style={{ display: "grid", gap: "0.5rem" }}>
-            <label style={{ fontSize: "0.875rem", fontWeight: "600", color: COLORS.textMain }}>
-              GitHub Username
+            <label style={{ 
+              fontSize: "0.875rem", 
+              fontWeight: "600", 
+              color: "#374151",
+              textTransform: "uppercase",
+              letterSpacing: "0.05em"
+            }}>
+              Username
             </label>
             <input 
               value={username} 
@@ -187,46 +204,73 @@ export default function Page() {
               placeholder="e.g. octocat" 
               required 
               style={{
-                padding: "0.75rem 1rem",
-                border: `1px solid ${COLORS.border}`,
-                borderRadius: "10px",
+                padding: "0.875rem 1rem",
+                border: "2px solid #e5e7eb",
+                borderRadius: "8px",
                 fontSize: "1rem",
+                transition: "all 0.2s ease",
                 outline: "none"
               }}
-              onFocus={(e) => e.target.style.borderColor = COLORS.primary}
-              onBlur={(e) => e.target.style.borderColor = COLORS.border}
+              onFocus={(e) => e.target.style.borderColor = "#2563eb"}
+              onBlur={(e) => e.target.style.borderColor = "#e5e7eb"}
             />
           </div>
 
           <div style={{ 
+            display: "grid", 
+            gap: "0.5rem",
             padding: "1rem",
             background: "#f8fafc",
-            borderRadius: "10px",
-            border: `1px dashed ${COLORS.border}`
+            borderRadius: "8px",
+            border: "1px solid #e2e8f0"
           }}>
-            <label style={{ fontSize: "0.75rem", fontWeight: "700", color: COLORS.textMuted, textTransform: "uppercase" }}>
-              Target Repository
+            <label style={{ 
+              fontSize: "0.875rem", 
+              fontWeight: "600", 
+              color: "#374151",
+              textTransform: "uppercase",
+              letterSpacing: "0.05em"
+            }}>
+              Generated Repository Name
             </label>
-            <div style={{ fontSize: "0.95rem", color: repoName ? COLORS.primary : COLORS.textMuted, fontFamily: "monospace", marginTop: "0.25rem", fontWeight: "600" }}>
-              {repoName || "Waiting for username..."}
+            <div style={{
+              padding: "0.875rem 1rem",
+              background: "white",
+              border: "2px solid #e5e7eb",
+              borderRadius: "8px",
+              fontSize: "1rem",
+              color: repoName ? "#374151" : "#9ca3af",
+              fontFamily: "monospace"
+            }}>
+              {repoName || "Enter username to see generated repo name"}
             </div>
           </div>
 
           <div style={{ display: "grid", gap: "0.5rem" }}>
-            <label style={{ fontSize: "0.875rem", fontWeight: "600", color: COLORS.textMain }}>
+            <label style={{ 
+              fontSize: "0.875rem", 
+              fontWeight: "600", 
+              color: "#374151",
+              textTransform: "uppercase",
+              letterSpacing: "0.05em"
+            }}>
               Permission Level
             </label>
             <select 
               value={permission} 
-              onChange={e => setPermission(e.target.value as any)}
+              onChange={e => setPermission(e.target.value as "pull"|"triage"|"push"|"maintain"|"admin")}
               style={{
-                padding: "0.75rem 1rem",
-                border: `1px solid ${COLORS.border}`,
-                borderRadius: "10px",
+                padding: "0.875rem 1rem",
+                border: "2px solid #e5e7eb",
+                borderRadius: "8px",
                 fontSize: "1rem",
+                transition: "all 0.2s ease",
                 outline: "none",
-                background: "#fcfcfd"
+                background: "white",
+                cursor: "pointer"
               }}
+              onFocus={(e) => e.target.style.borderColor = "#2563eb"}
+              onBlur={(e) => e.target.style.borderColor = "#e5e7eb"}
             >
               <option value="pull">📖 Pull (Read)</option>
               <option value="triage">🔍 Triage</option>
@@ -240,16 +284,28 @@ export default function Page() {
             display: "flex", 
             gap: "0.75rem", 
             alignItems: "center",
-            padding: "0.5rem 0"
+            padding: "1rem",
+            background: "#f8fafc",
+            borderRadius: "8px",
+            border: "1px solid #e2e8f0"
           }}>
             <input 
               type="checkbox" 
               checked={dryRun} 
               onChange={e => setDryRun(e.target.checked)}
-              style={{ width: "18px", height: "18px", accentColor: COLORS.primary, cursor: "pointer" }}
+              style={{
+                width: "18px",
+                height: "18px",
+                accentColor: "#2563eb"
+              }}
             />
-            <label style={{ fontSize: "0.9rem", color: COLORS.textMain, cursor: "pointer", fontWeight: "500" }}>
-              Dry run mode <span style={{ color: COLORS.textMuted, fontWeight: "400" }}>(no changes will be made)</span>
+            <label style={{ 
+              fontSize: "0.95rem", 
+              color: "#4b5563",
+              cursor: "pointer",
+              fontWeight: "500"
+            }}>
+              🧪 Dry run mode (simulate without making changes)
             </label>
           </div>
 
@@ -257,65 +313,181 @@ export default function Page() {
             disabled={loading} 
             type="submit"
             style={{
-              padding: "1rem",
-              background: loading ? "#cbd5e1" : `linear-gradient(to bottom right, ${COLORS.primary}, ${COLORS.accent})`,
+              padding: "1rem 2rem",
+              background: loading ? "#9ca3af" : "linear-gradient(135deg, #2563eb 0%, #10b981 100%)",
               color: "white",
               border: "none",
-              borderRadius: "12px",
-              fontSize: "1rem",
+              borderRadius: "8px",
+              fontSize: "1.1rem",
               fontWeight: "600",
               cursor: loading ? "not-allowed" : "pointer",
-              transition: "transform 0.1s ease, box-shadow 0.1s ease",
-              boxShadow: "0 4px 6px -1px rgba(79, 70, 229, 0.2)",
+              transition: "all 0.2s ease",
+              boxShadow: loading ? "none" : "0 4px 12px rgba(37, 99, 235, 0.35)",
+              transform: loading ? "none" : "translateY(0)",
               marginTop: "0.5rem"
             }}
-            onMouseEnter={(e) => { if (!loading) e.currentTarget.style.opacity = "0.9"; }}
-            onMouseLeave={(e) => { if (!loading) e.currentTarget.style.opacity = "1"; }}
+            onMouseEnter={(e) => {
+              if (!loading) {
+                e.currentTarget.style.transform = "translateY(-2px)";
+                e.currentTarget.style.boxShadow = "0 6px 16px rgba(37, 99, 235, 0.45)";
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (!loading) {
+                e.currentTarget.style.transform = "translateY(0)";
+                e.currentTarget.style.boxShadow = "0 4px 12px rgba(37, 99, 235, 0.35)";
+              }
+            }}
           >
-            {loading ? "Processing..." : dryRun ? "Simulate Process" : "Send Re-invite"}
+            {loading ? "⏳ Working..." : dryRun ? "🧪 Simulate" : "🚀 Re-invite"}
           </button>
         </form>
 
         {result && (
-          <section style={{ 
-            marginTop: "2rem", 
-            paddingTop: "2rem", 
-            borderTop: `1px solid ${COLORS.border}` 
-          }}>
-            <h2 style={{ fontSize: "1.25rem", fontWeight: "700", color: COLORS.textMain, marginBottom: "1rem" }}>
-              {result.ok ? "✨ Success" : "⚠️ Something went wrong"}
+          <section style={{ marginTop: "1rem" }}>
+            <h2 style={{ 
+              fontSize: "1.5rem", 
+              fontWeight: "600", 
+              color: "#1a1a1a", 
+              marginBottom: "1rem",
+              display: "flex",
+              alignItems: "center",
+              gap: "0.5rem"
+            }}>
+              {result.ok ? "✅ Result" : "❌ Error"}
             </h2>
-            
-            {result.ok ? (
-              <div style={{ background: "#f0fdf4", border: "1px solid #bbf7d0", borderRadius: "12px", padding: "1.25rem" }}>
-                {result.invite && (
-                  <div style={{ marginBottom: "1rem" }}>
-                    <p style={{ margin: "0 0 0.5rem 0", fontSize: "0.875rem", color: "#166534", fontWeight: "600" }}>Repository ready:</p>
+            {!result.ok && (
+              <div style={{ 
+                background: "#fef2f2", 
+                border: "1px solid #fecaca",
+                borderRadius: "8px",
+                padding: "1rem",
+                color: "#dc2626"
+              }}>
+                <pre style={{ 
+                  whiteSpace: "pre-wrap", 
+                  margin: "0",
+                  fontFamily: "inherit"
+                }}>
+                  {result.error}
+                </pre>
+              </div>
+            )}
+            {result.ok && (
+              <div style={{ 
+                background: "#f0f9ff", 
+                border: "1px solid #bae6fd",
+                borderRadius: "8px",
+                padding: "1.5rem",
+                overflow: "hidden"
+              }}>
+                {result.invite && (result.invite.status === 201 || result.invite.status === 204) && (
+                  <div style={{
+                    background: "#dcfce7",
+                    border: "1px solid #bbf7d0",
+                    borderRadius: "6px",
+                    padding: "1rem",
+                    marginBottom: "1rem"
+                  }}>
+                    <h3 style={{ 
+                      margin: "0 0 0.5rem 0", 
+                      fontSize: "1rem", 
+                      fontWeight: "600", 
+                      color: "#166534" 
+                    }}>
+                      🎉 Repository Link
+                    </h3>
                     <a 
                       href={`https://github.com/${owner}/${repoName}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      style={{ color: COLORS.primary, fontWeight: "600", textDecoration: "none", fontSize: "0.9rem", background: "white", padding: "0.5rem", borderRadius: "6px", display: "inline-block", border: "1px solid #bbf7d0" }}
+                      style={{
+                        color: "#1d4ed8",
+                        textDecoration: "none",
+                        fontSize: "0.9rem",
+                        fontFamily: "monospace",
+                        background: "white",
+                        padding: "0.5rem 0.75rem",
+                        borderRadius: "4px",
+                        border: "1px solid #d1d5db",
+                        display: "inline-block",
+                        wordBreak: "break-all"
+                      }}
+                      onMouseEnter={(e) => (e.target as HTMLAnchorElement).style.textDecoration = "underline"}
+                      onMouseLeave={(e) => (e.target as HTMLAnchorElement).style.textDecoration = "none"}
                     >
-                      View on GitHub ↗
+                      https://github.com/{owner}/{repoName}
                     </a>
                   </div>
                 )}
-                <pre style={{ fontSize: "0.75rem", color: "#166534", margin: "0", overflowX: "auto" }}>
+                <pre style={{ 
+                  background: "white",
+                  padding: "1rem",
+                  borderRadius: "6px",
+                  overflowX: "auto",
+                  fontSize: "0.875rem",
+                  lineHeight: "1.5",
+                  color: "#374151",
+                  border: "1px solid #e5e7eb",
+                  margin: "0"
+                }}>
                   {JSON.stringify(result, null, 2)}
                 </pre>
-              </div>
-            ) : (
-              <div style={{ background: "#fef2f2", border: "1px solid #fecaca", borderRadius: "12px", padding: "1.25rem", color: "#991b1b" }}>
-                <pre style={{ fontSize: "0.875rem", whiteSpace: "pre-wrap", margin: "0" }}>{result.error}</pre>
               </div>
             )}
           </section>
         )}
       </main>
       
-      <footer style={{ textAlign: "center", marginTop: "2rem", color: COLORS.textMuted, fontSize: "0.8rem" }}>
-        <p>© 2025 • GitHub Re-invite Tool • Built with ❤️</p>
+      <footer style={{
+        textAlign: "center",
+        marginTop: "1rem",
+        padding: "0.5rem",
+        color: "rgba(255, 255, 255, 0.8)",
+        fontSize: "0.85rem",
+        lineHeight: "1.5"
+      }}>
+        <p style={{ margin: "0 0 0.5rem 0", display: "flex", alignItems: "center", justifyContent: "center", flexWrap: "wrap", gap: "0.2em" }}>
+          <a href="https://github-reinvite.vercel.app/" style={{ color: "rgba(255, 255, 255, 0.9)", textDecoration: "none" }}>GitHub Re-invite</a> © 2025 by <a href="https://yahyagilany.io" style={{ color: "rgba(255, 255, 255, 0.9)", textDecoration: "none" }}>Yahya Gilany</a> is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" style={{ color: "rgba(255, 255, 255, 0.9)", textDecoration: "none" }}>CC BY-NC-SA 4.0</a>
+          <span style={{ display: "inline-flex", alignItems: "center", gap: "0.2em" }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="CC" style={{ maxWidth: "1em", maxHeight: "1em", display: "inline-block" }} />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="BY" style={{ maxWidth: "1em", maxHeight: "1em", display: "inline-block" }} />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" alt="NC" style={{ maxWidth: "1em", maxHeight: "1em", display: "inline-block" }} />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="SA" style={{ maxWidth: "1em", maxHeight: "1em", display: "inline-block" }} />
+          </span>
+        </p>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "1rem", flexWrap: "wrap" }}>
+          <a 
+            href="https://yahyagilany.io" 
+            style={{ 
+              color: "rgba(255, 255, 255, 0.9)", 
+              textDecoration: "none",
+              fontSize: "0.8rem",
+              display: "flex",
+              alignItems: "center",
+              gap: "0.3em"
+            }}
+          >
+            🌐 Website
+          </a>
+          <a 
+            href="https://www.buymeacoffee.com/ygilany" 
+            style={{ 
+              color: "rgba(255, 255, 255, 0.9)", 
+              textDecoration: "none",
+              fontSize: "0.8rem",
+              display: "flex",
+              alignItems: "center",
+              gap: "0.3em"
+            }}
+          >
+            📁 Repository
+          </a>
+        </div>
       </footer>
     </div>
   );
