@@ -26,7 +26,8 @@ export const ORGANIZATIONS = {
       "Hydrogenic Atoms": "hydrogenic-atoms",
       "Knowledge Test 1": "knowledge-test-1",
       "Knowledge Test 2": "knowledge-test-2",
-      "Knowledge Test 3": "knowledge-test-3"
+      "Knowledge Test 3": "knowledge-test-3",
+      "FixMe notebooks": "fix-me-examples"
     }
   }
 } as const;
