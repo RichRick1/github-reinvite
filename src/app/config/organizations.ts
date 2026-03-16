@@ -27,7 +27,8 @@ export const ORGANIZATIONS = {
       "Knowledge Test 1": "knowledge-test-1",
       "Knowledge Test 2": "knowledge-test-2",
       "Knowledge Test 3": "knowledge-test-3",
-      "FixMe notebooks": "fix-me-examples"
+      "FixMe notebooks": "fix-me-examples",
+      "Selection Rulse": "selection-rules",
     }
   }
 } as const;
